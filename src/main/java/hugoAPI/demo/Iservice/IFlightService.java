@@ -2,6 +2,8 @@ package hugoAPI.demo.Iservice;
 
 import hugoAPI.demo.DataTranferObjects.FlightDTO;
 
+import java.util.List;
+
 public interface IFlightService {
      FlightDTO saveFlight(FlightDTO flightDTO);
 
@@ -10,4 +12,6 @@ public interface IFlightService {
      FlightDTO updateFlight(FlightDTO flightDTO);
 
      void deleteFlight(Integer id);
+
+     List<FlightDTO> getAllFlights();
 }
