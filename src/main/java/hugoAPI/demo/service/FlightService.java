@@ -82,12 +82,10 @@ public class FlightService implements IFlightService {
 
         Iterable<FlightModel> flights = flightRepository.findAll();
 
-        List<FlightDTO> flightsDTOList = StreamSupport.stream(flights.spliterator(), false).map(flight -> {
+        return StreamSupport.stream(flights.spliterator(), false).map(flight -> {
             FlightDTO flightDTO = new FlightDTO();
             BeanUtils.copyProperties(flight, flightDTO);
             return flightDTO;
         }).collect(Collectors.toList());
-
-        return flightsDTOList;
     }
 }
