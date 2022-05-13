@@ -6,6 +6,8 @@ import hugoAPI.demo.Iservice.IFlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class FlightController {
 
@@ -15,6 +17,11 @@ public class FlightController {
     @GetMapping (path = "/api/flight/getFlight/{id}")
     public FlightDTO getFlight(@PathVariable("id") Integer id){
         return flightService.getFlight(id);
+    }
+
+    @GetMapping (path = "/api/flight/getAllFlights")
+    public List<FlightDTO> getAllFlights(){
+        return flightService.getAllFlights();
     }
 
     @PostMapping (path = "/api/flight/createFlight")

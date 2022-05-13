@@ -8,7 +8,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class FlightService implements IFlightService {
@@ -72,6 +75,17 @@ public class FlightService implements IFlightService {
         }else {
             //TODO trow exception
         }
+    }
 
+    @Override
+    public List<FlightDTO> getAllFlights() {
+
+        Iterable<FlightModel> flights = flightRepository.findAll();
+
+        return StreamSupport.stream(flights.spliterator(), false).map(flight -> {
+            FlightDTO flightDTO = new FlightDTO();
+            BeanUtils.copyProperties(flight, flightDTO);
+            return flightDTO;
+        }).collect(Collectors.toList());
     }
 }
