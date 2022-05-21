@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -87,5 +88,14 @@ public class FlightService implements IFlightService {
             BeanUtils.copyProperties(flight, flightDTO);
             return flightDTO;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public Map<String, List<FlightModel>> getAllFlightsByManufacture() {
+
+        var flights = flightRepository.findAll();
+        var flightList = StreamSupport.stream(flights.spliterator(), false).toList();
+
+        return  flightList.stream().collect(Collectors.groupingBy(FlightModel::getMfdBy));
     }
 }
