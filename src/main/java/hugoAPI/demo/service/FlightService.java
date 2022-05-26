@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -97,5 +99,20 @@ public class FlightService implements IFlightService {
         var flightList = StreamSupport.stream(flights.spliterator(), false).toList();
 
         return  flightList.stream().collect(Collectors.groupingBy(FlightModel::getMfdBy));
+    }
+
+    @Override
+    public Map<String, Integer> getFlightCapacityByInterval(Date date) {
+        var flights = StreamSupport.stream(flightRepository.findAll().spliterator(), false).toList();
+        var dateConvert= date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+
+        int flightCapacity = flights.stream()
+                .filter(flight -> flight.getMfdOn().isBefore(dateConvert))
+                .mapToInt(FlightModel::getFlightCapacity)
+                .sum();
+        return null;
     }
 }

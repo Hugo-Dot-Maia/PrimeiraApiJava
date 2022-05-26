@@ -3,6 +3,7 @@ package hugoAPI.demo.Iservice;
 import hugoAPI.demo.DataTranferObjects.FlightDTO;
 import hugoAPI.demo.model.FlightModel;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,6 @@ public interface IFlightService {
      List<FlightDTO> getAllFlights();
 
      Map<String, List<FlightModel>> getAllFlightsByManufacture();
+
+     Map<String, Integer> getFlightCapacityByInterval(Date date);
 }

@@ -5,8 +5,10 @@ import hugoAPI.demo.DataTranferObjects.FlightDTO;
 import hugoAPI.demo.Iservice.IFlightService;
 import hugoAPI.demo.model.FlightModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,13 @@ public class FlightController {
     @GetMapping (path = "/api/flight/getAllFlightsByManufacture")
     public Map<String, List<FlightModel>> getAllFlightsByManufacture(){
         return flightService.getAllFlightsByManufacture();
+    }
+
+    @GetMapping("/api/flight/getFlightCapacityByInterval/{date}")
+    public Map<String, Integer > getFlightCapacityByInterval(
+            @PathVariable("date")
+            @DateTimeFormat(pattern = "MM/dd/yyyy") Date date){
+            return flightService.getFlightCapacityByInterval(date);
     }
 
     @PostMapping (path = "/api/flight/createFlight")
